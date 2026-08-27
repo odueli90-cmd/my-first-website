@@ -41,7 +41,43 @@
 
         <a href="index.html">← Back to Home</a>
     </section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://frkhpefjozwjlnoxsfiz.supabase.co";
+const SUPABASE_KEY = "sb_publishable_s1MtFLZRWXdcfPNnjC0PWg_e8sZK4fV
+
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+async function loadResearch() {
+    const { data, error } = await supabase
+        .from("research")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    const container = document.getElementById("research-data");
+
+    if (error) {
+        container.innerHTML = "<p>Unable to load research.</p>";
+        console.error(error);
+        return;
+    }
+
+    data.forEach(article => {
+        container.innerHTML += `
+            <div class="research-card">
+                <h3>${article.title}</h3>
+                <p>${article.content}</p>
+            </div>
+        `;
+    });
+}
+
+loadResearch();
+</script>
 </body>
 
 </html>
