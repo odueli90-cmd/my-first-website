@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,7 @@
     </nav>
 
     <section>
+
         <h1>Create Your Account</h1>
 
         <form id="signup-form">
@@ -37,75 +39,57 @@
             Already have an account?
             <a href="login.html">Log in</a>
         </p>
-    </section
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-    const SUPABASE_URL = "https://frkhpefjozwjlnoxsfiz.supabase.co";
-    const SUPABASE_KEY = "sb_punlishable_s1MtFLZRWXdcfPNnjC0Wg_e8sZK4fV";
+    </section>
 
-    const supabase = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    document.getElementById("signup-form").addEventListener("submit", async function(event) {
+    <script>
 
-        event.preventDefault();
+        const SUPABASE_URL = "https://frkhpefjozwjlnoxsfiz.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_s1MtFLZRWXdcfPNnjC0Wg_e8sZK4fv";
 
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const message = document.getElementById("message");
-
-        message.textContent = "Creating your account...";
-
-        try {
-            const { data, error } = await supabase.auth.signUp({
-                email: email,
-                password: password
-            });
-
-            if (error) {
-                message.textContent = "Error: " + error.message;
-                return;
-            }
-
-            if (data.user) {
-                message.textContent =
-                    "Account created successfully! Please check your email and confirm your account.";
-            } else {
-                message.textContent =
-                    "Please check your email to confirm your account.";
-            }
-
-        } catch (error) {
-            message.textContent = "Something went wrong: " + error.message;
-        }
-    });
-</script>
+        const supabase = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
         );
 
         document.getElementById("signup-form").addEventListener("submit", async function(event) {
 
             event.preventDefault();
 
-            const email = document.getElementById("email").value;
+            const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
             const message = document.getElementById("message");
 
-            const { data, error } = await supabase.auth.signUp({
-                email: email,
-                password: password
-            });
+            message.textContent = "Creating your account...";
 
-            if (error) {
-                message.textContent = error.message;
-                return;
+            try {
+
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    message.textContent = "Error: " + error.message;
+                    return;
+                }
+
+                message.textContent =
+                    "Account created successfully! Please check your email and confirm your account.";
+
+            } catch (error) {
+
+                message.textContent =
+                    "Something went wrong: " + error.message;
+
             }
 
-            message.textContent = "Account created successfully! Check your email to confirm your account.";
         });
+
     </script>
 
 </body>
-  </html>
+
+    </html>
