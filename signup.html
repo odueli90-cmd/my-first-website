@@ -37,17 +37,52 @@
             Already have an account?
             <a href="login.html">Log in</a>
         </p>
-    </section>
+    </section
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const SUPABASE_URL = "https://frkhpefjozwjlnoxsfiz.supabase.co";
+    const SUPABASE_KEY = "sb_punlishable_s1MtFLZRWXdcfPNnjC0Wg_e8sZK4fV";
 
-    <script>
-        const SUPABASE_URL = "https://frkhpefjozwjlnoxsfiz.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_s1MtFLZRWXdcfPNjC0PWg_e8sZK4fV";
+    const supabase = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
-        const supabase = window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
+    document.getElementById("signup-form").addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const message = document.getElementById("message");
+
+        message.textContent = "Creating your account...";
+
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                message.textContent = "Error: " + error.message;
+                return;
+            }
+
+            if (data.user) {
+                message.textContent =
+                    "Account created successfully! Please check your email and confirm your account.";
+            } else {
+                message.textContent =
+                    "Please check your email to confirm your account.";
+            }
+
+        } catch (error) {
+            message.textContent = "Something went wrong: " + error.message;
+        }
+    });
+</script>
         );
 
         document.getElementById("signup-form").addEventListener("submit", async function(event) {
